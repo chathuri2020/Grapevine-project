@@ -2,7 +2,7 @@ import gradio as gr
 import PIL.Image as Image
 from ultralytics import ASSETS, YOLO
 
-model = YOLO("yolov8n.pt")
+model = YOLO("best_2025_10_09.pt")
 
 
 def predict_image(img, conf_threshold, iou_threshold):

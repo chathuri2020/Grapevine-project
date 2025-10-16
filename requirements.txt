@@ -1,0 +1,9 @@
+ultralytics>=8.0.0
+gradio>=3.40
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+opencv-python>=4.7
+numpy>=1.25
+Pillow>=10.0
+matplotlib>=3.8
