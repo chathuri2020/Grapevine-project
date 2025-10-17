@@ -1,43 +1,66 @@
 import gradio as gr
 import PIL.Image as Image
 from ultralytics import ASSETS, YOLO
+import tempfile, zipfile, os
+import io # Required to handle files in memory
+import pandas as pd
+from ultralytics import ASSETS, YOLO
 
 model = YOLO("best_2025_10_09.pt")
 
 
-def predict_image(img, conf_threshold, iou_threshold):
-    """Predicts and plots labeled objects in an image using YOLOv8 model with adjustable confidence and IOU thresholds."""
-    results = model.predict(
-        source=img,
-        conf=conf_threshold,
-        iou=iou_threshold,
-        show_labels=True,
-        show_conf=True,
-        imgsz=640,
-    )
+def process_zip(zip_file):
+    results_list = []
 
-    for r in results:
-        im_array = r.plot()
-        im = Image.fromarray(im_array[..., ::-1])
+    # Create a temporary folder to extract the zip
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        with zipfile.ZipFile(zip_file.name, 'r') as zip_ref:
+            zip_ref.extractall(tmpdirname)
+        
+        # Walk through the extracted folder
+        for root, dirs, files in os.walk(tmpdirname):
+            for file in files:
+                if not file.lower().endswith(('.jpg','.jpeg','.png')):
+                    continue
 
-    return im
+                img_path = os.path.join(root, file)
+                results = model(img_path, verbose=False)[0]
 
+                flower_count = sum(1 for box in results.boxes if int(box.cls) == 1)
+                berry_count  = sum(1 for box in results.boxes if int(box.cls) == 0)
+                ratio = flower_count / berry_count if berry_count > 0 else None
+
+                # Extract folder info for image ID
+                relative_path = os.path.relpath(root, tmpdirname)
+                parts = relative_path.split(os.sep)
+                main_stage = parts[1].capitalize() if len(parts) > 0 else "Unknown"
+                treatment = parts[2].lower() if len(parts) > 1 else "unknown"
+
+                numbering_folder = os.path.basename(root)
+                if numbering_folder.lower().startswith("pt"):
+                    numbering_folder = numbering_folder[2:]
+
+                image_number = os.path.splitext(file)[0]
+
+                image_id = f"{main_stage}_{treatment}_{numbering_folder}_{image_number}"
+                bunch_id = f"{treatment}_{numbering_folder}_{image_number}"
+
+                results_list.append({
+                    "Bunch_ID": bunch_id,
+                    "Image_ID": image_id,
+                    "Treatment": treatment,
+                    "Flowers": flower_count,
+                    "Berries": berry_count,
+                    "Ratio": ratio
+                })
+    df = pd.DataFrame(results_list)
+    return df
 
 iface = gr.Interface(
-    fn=predict_image,
-    inputs=[
-        gr.Image(type="pil", label="Upload Image"),
-        gr.Slider(minimum=0, maximum=1, value=0.25, label="Confidence threshold"),
-        gr.Slider(minimum=0, maximum=1, value=0.45, label="IoU threshold"),
-    ],
-    outputs=gr.Image(type="pil", label="Result"),
-    title="Ultralytics Gradio",
-    description="Upload images for inference. The Ultralytics YOLOv8n model is used by default.",
-    examples=[
-        [ASSETS / "bus.jpg", 0.25, 0.45],
-        [ASSETS / "zidane.jpg", 0.25, 0.45],
-    ],
+    fn=process_zip,
+    inputs=gr.File(file_types=[".zip"], label="Upload ZIP of Images"),
+    outputs=gr.Dataframe(headers=["Bunch_ID","Image_ID","Treatment","Flowers","Berries","Ratio"])
 )
 
-if __name__ == "__main__":
-    iface.launch()
+iface.launch()
+
