@@ -8,6 +8,7 @@ import os
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
+
 def generate_report(csv_file):
     # ---------------- Read CSV ----------------
     df = pd.read_csv(csv_file.name)
