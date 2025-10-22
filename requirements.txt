@@ -9,3 +9,4 @@ Pillow>=10.0
 matplotlib>=3.8
 seaborn
 scikit-learn
+reportlab
