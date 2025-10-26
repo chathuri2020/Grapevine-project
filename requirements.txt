@@ -1,0 +1,23 @@
+ultralytics>=8.0.0
+gradio>=3.40
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+opencv-python>=4.7
+numpy>=1.25
+Pillow>=10.0
+matplotlib>=3.8
+seaborn
+scikit-learn
+reportlab  #djngo
+asgiref==3.6.0
+crispy-bootstrap5==0.7
+Django==4.1.6
+django-crispy-forms==1.14.0
+psycopg2-binary==2.9.3
+sqlparse==0.4.3
+tzdata==2022.7
+fastapi
+uvicorn
+python-multipart
+django-cors-headers

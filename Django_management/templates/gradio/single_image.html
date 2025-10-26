@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Input Image</h6>
+            </div>
+            <div class="card-body">
+                <input type="file" class="form-control" id="img-input-single" accept="image/*">
+                <button class="btn btn-primary mt-3" id="run-single-btn">
+                    Run Analysis
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Analysis Output</h6>
+            </div>
+            <div class="card-body text-center">
+                <!-- <img id="img-output-single" src="" style="max-width: 100%; display: none;" alt="Processed Image"> -->
+                <div class="image-frame mx-auto">
+                    <img id="img-output-single" src=""
+                        style="width: 100%; height: 100%; object-fit: contain; display: none;" alt="Processed Image">
+                </div>
+
+                <p id="single-loading-text" class="text-info mt-5" style="display: none;">Processing...</p>
+
+                <div id="metrics-output-single" class="mt-5 text-left">
+                    Select an image and click Run Analysis.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/gradio.js' %}"></script>
+
+{% endblock content %}

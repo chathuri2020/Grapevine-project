@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <label for="csv-input-report">Upload CSV File</label>
+        <input type="file" id="csv-input-report" accept=".csv" class="form-control mb-3">
+        <button id="run-report-btn" class="btn btn-warning">Generate PDF & CSV Report</button>
+    </div>
+    <div class="col-md-6">
+        <label>Download Outputs</label>
+        <a id="pdf-output-report-link" href="#" class="btn btn-secondary btn-block mb-2" style="display: none;">Download PDF Report</a>
+        <a id="csv-output-report-link" href="#" class="btn btn-secondary btn-block" style="display: none;">Download CSV Summary</a>
+    </div>
+</div>
+
+<script type="module" src="{% static 'assets/js/gradio.js' %}"></script>
+{% endblock content %}

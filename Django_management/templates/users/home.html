@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+ <div class="row mt-2">
+    <div class="col-md-6">
+        <label for="img-input-single">Upload Single Image</label>
+        <input type="file" id="img-input-single" accept="image/*" class="form-control mb-3">
+        <button id="run-single-btn" class="btn btn-primary">Run Single Image Analysis</button>
+    </div>
+    <div class="col-md-6">
+        <label>Detection Overlay</label>
+        <div class="p-2 border rounded text-center" style="height: 300px;">
+            <img id="img-output-single" src="" alt="Detection Overlay" class="img-fluid" style="display: none; max-height: 512px;">
+            <p id="single-loading-text" style="display: none; margin-top: 150px;">Processing...</p>
+        </div>
+        <div class="mt-3">
+            <label>Metrics</label>
+            <div id="metrics-output-single" class="alert alert-secondary">Ready for analysis.</div>
+        </div>
+    </div>
+</div>
+
+
+<script type="module" src="{% static 'assets/js/gradio.js' %}"></script>
+{% endblock content %}

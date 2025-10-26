@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <label for="zip-input-batch">Upload ZIP of Images</label>
+        <input type="file" id="zip-input-batch" accept=".zip" class="form-control mb-3">
+        <button id="run-batch-btn" class="btn btn-success">Run Batch Analysis</button>
+        <div class="mt-4">
+            <label for="csv-output-batch">Download CSV File</label>
+            <a id="csv-output-batch-link" href="#" class="btn btn-info btn-block" style="display: none;">⬇️ Download CSV</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <label>Batch Analysis Results</label>
+        <textarea id="zip-output-batch" class="form-control" rows="15" readonly placeholder="Results will appear here..."></textarea>
+    </div>
+</div>
+<script type="module" src="{% static 'assets/js/gradio.js' %}"></script>
+{% endblock content %}
