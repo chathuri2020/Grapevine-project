@@ -26,9 +26,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 
-#gradio import
- # import the app.py
-from Gradio_management.app import get_gradio_html  # 👈 import from new folder
+
 
 
 urlpatterns = [
@@ -36,7 +34,7 @@ urlpatterns = [
     path('', include('users.urls'), name='user_app'),
     #gradio conect
     #path('gradio/', login_required(get_gradio_html), name='gradio')
-    path('gradio/', get_gradio_html, name='gradio'),
+    #path('gradio/', get_gradio_html, name='gradio'),
     path('', include('gradio_dashboard.urls'), name='gradio_dashboard'),
 ]
 

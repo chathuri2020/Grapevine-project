@@ -44,5 +44,5 @@ def process_single(image_file):
         color = "blue" if cls == 1 else "black"
         draw.rectangle([x1, y1, x2, y2], outline=color, width=5)
 
-    metrics = {"Flowers": flower_count, "Berries": berry_count}
+    metrics = {"Buds": flower_count, "Berries": berry_count}
     return img_overlay, metrics

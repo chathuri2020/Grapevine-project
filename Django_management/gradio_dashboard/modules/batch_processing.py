@@ -1,18 +1,18 @@
 import os, tempfile, zipfile
 import pandas as pd
 from ultralytics import YOLO
-
-#model = YOLO("models/best_2025_10_09.pt")
 import os
-# BASE_DIR points to Gradio_management folder
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-model_path = os.path.join(BASE_DIR, "models", "best_2025_10_09.pt")
-print("Loading model from:", model_path)
-assert os.path.exists(model_path), "Model file not found!"
 
+APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+model_path = os.path.join(APP_DIR, "models", "best_2025_10_09.pt")
+print("Calculated model path:", model_path)
 
-# Load the model
-model = YOLO(model_path)
+try:
+    model = YOLO(model_path)
+    print("YOLO Model loaded successfully for batch analysis.")
+except Exception as e:
+    print(f"Error loading YOLO model: {e}")
+    model = None
 
 def process_batch(zip_file):
     results_list = []

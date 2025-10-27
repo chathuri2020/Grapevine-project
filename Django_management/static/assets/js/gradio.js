@@ -27,12 +27,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         metricsOutput.textContent = 'Processing...';
 
         const formData = new FormData();
-        formData.append('image_file', file); 
-        formData.append('csrfmiddlewaretoken', getCsrfToken()); 
-        
+        formData.append('image_file', file);
+        formData.append('csrfmiddlewaretoken', getCsrfToken());
+
         try {
             // Path MUST match the URL pattern in urls.py ('single_image/')
-            const response = await fetch('/single_image_t/', { 
+            const response = await fetch('/single_image_t/', {
                 method: 'POST',
                 body: formData,
             });
@@ -44,11 +44,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
 
             const data = await response.json();
-            
+
             // Set image source from Base64 string returned by the view
             outputImage.src = 'data:image/png;base64,' + data.processed_image_b64;
-            outputImage.style.display = 'block';
+           outputImage.style.display = 'block';
+            outputImage.style.height = 'auto';
+            outputImage.style.objectFit = "contain";
             
+
             // Display metrics
             metricsOutput.innerHTML = `
                 <strong>Results:</strong><br>

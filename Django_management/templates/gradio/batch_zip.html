@@ -2,21 +2,55 @@
 {% load static %}
 
 {% block content %}
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+<div class="container">
+    <div class="main-body">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Upload ZIP of Images</h6>
+                        </div>
+                        <div class="card-body">
+                            <input id="zip-input-batch" type="file" accept=".zip" class="form-control">
+                            <button class="btn btn-primary mt-3" id="run-single-btn">
+                                Run Batch Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card ">
+                    <div class="card-header py-3 text-center">
+                        <h6 class="m-0 font-weight-bold text-primary">Batch Analysis Results</h6>
+                    </div>
+                    <div class="card-body ">
 
-<div class="row mt-4">
-    <div class="col-md-4">
-        <label for="zip-input-batch">Upload ZIP of Images</label>
-        <input type="file" id="zip-input-batch" accept=".zip" class="form-control mb-3">
-        <button id="run-batch-btn" class="btn btn-success">Run Batch Analysis</button>
-        <div class="mt-4">
-            <label for="csv-output-batch">Download CSV File</label>
-            <a id="csv-output-batch-link" href="#" class="btn btn-info btn-block" style="display: none;">⬇️ Download CSV</a>
+                        <div class="d-flex flex-column align-items-center text-center image-container"
+                            style="min-height: 200px; ">
+                            <textarea id="zip-output-batch" class="form-control" rows="15" readonly
+                                placeholder="Results will appear here..." style="background-color: black;"></textarea>
+
+                        </div>
+
+
+                        <div id="metrics-output-single" class="mt-5 text-left">
+                            Select an image and click Run Analysis.
+                        </div>
+                        <p id="single-loading-text" class="text-info mt-5" style="display: none;"></p>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-8">
-        <label>Batch Analysis Results</label>
-        <textarea id="zip-output-batch" class="form-control" rows="15" readonly placeholder="Results will appear here..."></textarea>
-    </div>
 </div>
-<script type="module" src="{% static 'assets/js/gradio.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'assets/css/models.css' %}">
+
+<script src="{% static 'assets/js/gradio.js' %}"></script>
+
 {% endblock content %}

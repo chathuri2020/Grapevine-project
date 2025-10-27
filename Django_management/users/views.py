@@ -9,7 +9,7 @@ from users.models import MyUser
 from users.forms import UserCreateForm, UserUpdateForm, CustomerUpdateForm, CustomerProfileForm
 
 
-from Gradio_management.app import get_gradio_html
+
 
 
 class MyMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -121,6 +121,3 @@ class UserProfile(LoginRequiredMixin, UpdateView):
             messages.success(request, f"{username}'s profile has been updated successfully!")
         return redirect(reverse_lazy('user_app:profile', kwargs={'pk': user.id}))
 
-def gradio_view(request):
-    html_snippet = get_gradio_html()
-    return render(request, "gradio_page.html", {"gradio_html": html_snippet})
