@@ -2,19 +2,49 @@
 {% load static %}
 
 {% block content %}
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
-<div class="row mt-4">
-    <div class="col-md-6">
-        <label for="csv-input-report">Upload CSV File</label>
-        <input type="file" id="csv-input-report" accept=".csv" class="form-control mb-3">
-        <button id="run-report-btn" class="btn btn-warning">Generate PDF & CSV Report</button>
-    </div>
-    <div class="col-md-6">
-        <label>Download Outputs</label>
-        <a id="pdf-output-report-link" href="#" class="btn btn-secondary btn-block mb-2" style="display: none;">Download PDF Report</a>
-        <a id="csv-output-report-link" href="#" class="btn btn-secondary btn-block" style="display: none;">Download CSV Summary</a>
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- Upload CSV -->
+        <div class="col-lg-4">
+            <div class="card bg-dark text-light">
+                <div class="card-header">Upload Batch Analysis CSV</div>
+                <div class="card-body">
+                    <input type="file" class="form-control mb-3" id="csv-input-report" accept=".csv">
+                    <button class="btn btn-primary w-100" id="generate-report-btn">Generate Reports</button>
+                    <div class="mt-4 p-2 bg-dark text-light rounded small">
+                        <strong>Instructions:</strong><br>
+                        • Upload only the <code>.csv</code> file generated from Batch Analysis.<br>
+                        • Report generation combines <b>BUD</b> and <b>FRUIT</b> data.<br>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output / Download Links -->
+        <div class="col-lg-8">
+            <div class="card bg-dark text-light">
+                <div class="card-header text-center">Report Output</div>
+                <div class="card-body text-center">
+                    <div id="report-loading-text" class="text-warning mb-3" style="display:none;">
+                        ⏳ Generating reports...
+                    </div>
+                    <div id="report-downloads" style="display:none;">
+                        <a id="download-pdf" class="btn btn-danger m-2" download>Download PDF Report</a>
+                        <a id="download-csv" class="btn btn-success m-2" download>Download Summary CSV</a>
+                    </div>
+                    <div id="report-status" class="mt-3 text-primary small">
+                        Upload a CSV and click <b>Generate Reports</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
-<script type="module" src="{% static 'assets/js/gradio.js' %}"></script>
+<script src="{% static 'assets/js/report_generation.js' %}"></script>
 {% endblock content %}

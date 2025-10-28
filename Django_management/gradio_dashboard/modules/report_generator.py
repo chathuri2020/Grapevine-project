@@ -12,12 +12,19 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.platypus import PageBreak
+import matplotlib
+matplotlib.use("Agg")  # Non-GUI backend for server-side plotting
+import matplotlib.pyplot as plt
 
 def generate_report(csv_file):
+    print("report generation part working")
     # ---------------- Read CSV ----------------
-    df = pd.read_csv(csv_file.name)
-    df['Bunch_ID'] = df['Bunch_ID'].str.replace(" ", "", regex=False).str.strip()
-    df['Image_ID'] = df['Image_ID'].str.replace(" ", "", regex=False).str.strip()
+    #df = pd.read_csv(csv_file.name)
+    df = pd.read_csv(csv_file)
+    df['Bunch_ID'] = df['Bunch_ID'].str.replace(
+        " ", "", regex=False).str.strip()
+    df['Image_ID'] = df['Image_ID'].str.replace(
+        " ", "", regex=False).str.strip()
 
     # ---------------- Merge Data ----------------
     merged_df = df.groupby(['Bunch_ID', 'Treatment'], as_index=False).agg({
@@ -43,14 +50,14 @@ def generate_report(csv_file):
     }
 
     # ---------------- Generate Plots ----------------
-    plt.figure(figsize=(6,6))
+    plt.figure(figsize=(6, 6))
     plt.pie([merged_df['Flowers'].sum(), merged_df['Berries'].sum()],
-            labels=['Flowers','Berries'], autopct='%1.1f%%', colors=['#1f77b4','#ff7f0e'])
+            labels=['Flowers', 'Berries'], autopct='%1.1f%%', colors=['#1f77b4', '#ff7f0e'])
     plt.title('Overall Flower/Berry Ratio')
     plt.savefig(img_files['pie'], bbox_inches='tight')
     plt.close()
 
-    plt.figure(figsize=(8,6))
+    plt.figure(figsize=(8, 6))
     sns.scatterplot(x='Flowers', y='Berries', data=merged_df, color='skyblue')
     plt.title("Buds vs Fruits")
     plt.xlabel("Buds (Flowers)")
@@ -60,7 +67,7 @@ def generate_report(csv_file):
     plt.close()
 
     # ---------------- Linear Regression ----------------
-    X = merged_df['Flowers'].values.reshape(-1,1)
+    X = merged_df['Flowers'].values.reshape(-1, 1)
     y = merged_df['Berries'].values
     model = LinearRegression()
     model.fit(X, y)
@@ -78,27 +85,29 @@ def generate_report(csv_file):
     flowables = []
 
     # Title
-    flowables.append(Paragraph("<b>Grapevine Growth Analysis Report</b>", styles['Title']))
+    flowables.append(
+        Paragraph("<b>Grapevine Growth Analysis Report</b>", styles['Title']))
     flowables.append(Spacer(1, 12))
 
     # Pie Chart
-    flowables.append(Paragraph("Overall Flower/Berry Ratio", styles['Heading2']))
+    flowables.append(
+        Paragraph("Overall Flower/Berry Ratio", styles['Heading2']))
     flowables.append(Image(img_files['pie'], width=300, height=300))
     flowables.append(Spacer(1, 12))
-    
+
     flowables.append(PageBreak())
     # Scatter Plot
     flowables.append(Paragraph("Buds vs Fruits", styles['Heading2']))
     flowables.append(Image(img_files['scatter'], width=400, height=300))
     flowables.append(Spacer(1, 12))
-    
+
     # lmplot creates its own figure, so save it
     g = sns.lmplot(
         x='Flowers',
         y='Berries',
         hue='Treatment',
         data=merged_df,
-        markers=['o','s'],
+        markers=['o', 's'],
         palette='Set1',
         height=6,
         aspect=1.2,
@@ -110,20 +119,21 @@ def generate_report(csv_file):
     plt.close(g.fig)
     # Add lmplot to PDF flowables
     flowables.append(Spacer(1, 12))
-    flowables.append(Paragraph("Buds vs Fruits by Treatment (Regression)", styles['Heading2']))
+    flowables.append(
+        Paragraph("Buds vs Fruits by Treatment (Regression)", styles['Heading2']))
     flowables.append(Image(img_files['lmplot'], width=400, height=300))
     flowables.append(Spacer(1, 12))
 
-
     # Regression Metrics Table
-    flowables.append(Paragraph("Linear Regression Metrics", styles['Heading2']))
+    flowables.append(
+        Paragraph("Linear Regression Metrics", styles['Heading2']))
     table_data = [list(metrics_df.columns)] + metrics_df.values.tolist()
     table = Table(table_data, hAlign='LEFT')
     table.setStyle(TableStyle([
-        ('BACKGROUND',(0,0),(-1,0),colors.lightblue),
-        ('GRID',(0,0),(-1,-1),1,colors.grey),
-        ('FONT',(0,0),(-1,-1),'Helvetica',10),
-        ('ALIGN',(1,1),(-1,-1),'CENTER'),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
+        ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+        ('FONT', (0, 0), (-1, -1), 'Helvetica', 10),
+        ('ALIGN', (1, 1), (-1, -1), 'CENTER'),
     ]))
     flowables.append(table)
 

@@ -8,11 +8,18 @@ from django.views.decorators.http import require_POST
 from PIL import Image
 from io import BytesIO
 import base64
-
+import os
 # Import your model logic function
 from .modules.single_image import process_single
 from .modules.batch_processing import process_batch
 from django.http import FileResponse
+from .modules.report_generator import generate_report
+from django.http import FileResponse
+
+from django.http import JsonResponse, FileResponse, Http404
+from django.views.decorators.csrf import csrf_exempt
+
+from django.conf import settings
 
 # --- Normal HTML pages ---
 
@@ -90,7 +97,7 @@ def batch_zip_api(request):
 
         # Convert DataFrame to string for frontend display
         csv_text = df.to_string(index=False)
-        #convert 
+        # convert
         df_json = df.to_dict(orient='records')
         columns = list(df.columns)
 
@@ -113,3 +120,49 @@ def download_csv(request):
     if not csv_path or not os.path.exists(csv_path):
         return JsonResponse({'error': 'File not found'}, status=404)
     return FileResponse(open(csv_path, 'rb'), as_attachment=True, filename='grape_growth_results.csv')
+
+
+
+# ---------------- Report Generation API ----------------
+@csrf_exempt
+def generate_report_api(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST method required"}, status=405)
+
+    if "csv_file" not in request.FILES:
+        return JsonResponse({"error": "CSV file not provided."}, status=400)
+
+    csv_file = request.FILES["csv_file"]
+
+    try:
+        pdf_path, csv_path = generate_report(csv_file)
+
+        # Return filenames (not full temp paths)
+        return JsonResponse({
+            "success": True,
+            #"pdf_file": os.path.basename(pdf_path),
+            #"csv_file": os.path.basename(csv_path)
+            "pdf_file": pdf_path,
+            "csv_file":csv_path
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+# ---------------- Download API ----------------
+def download_report(request):
+    file_name = request.GET.get("file")
+    file_type = request.GET.get("type")  # optional check
+
+    if not file_name:
+        raise Http404("File not specified.")
+
+    # TEMP folder where generate_report saved files
+   
+    temp_dir = os.path.join(settings.MEDIA_ROOT, 'temp')
+    file_path = os.path.join(temp_dir, file_name)
+
+    if not os.path.exists(file_path):
+        raise Http404("File not found.")
+
+    return FileResponse(open(file_path, "rb"), as_attachment=True, filename=file_name)
