@@ -25,8 +25,11 @@
                         <input id="zip-input-batch" type="file" accept=".zip" class="form-control">
                         <button class="btn btn-primary mt-3 w-100" id="run-batch-btn">Run Batch Analysis</button>
                         <p id="single-loading-text" class="mt-3" style="color: rgb(180, 149, 11);">
-                            Results will appear 
+                            Results will appear
                         </p>
+
+                        <!-- Instructions box -->
+
                     </div>
                 </div>
             </div>
@@ -42,6 +45,24 @@
                         <div id="metrics-output-single" class="mt-3 text-ce">
                             Select a ZIP and click Run Analysis.
                         </div>
+                        <!-- <div class="alert alert-secondary small">
+                            <strong>Instructions:</strong>
+                            <ul class="mb-0">
+                                <li>ZIP must have this structure: MainFolder → buds & fruits → irrigated/non-irrigated →
+                                    numbered folders → PNG files</li>
+                                <li>Example:
+                                    <pre class="mb-0">
+                                            MainFolder/
+                                            ├─ buds/
+                                            │  ├─ irrigated/
+                                            │  └─ non-irrigated/
+                                            ├─ fruits/
+                                            ├─ irrigated/
+                                            └─ non-irrigated/
+                                                            </pre>
+                                </li>
+                            </ul>
+                        </div> -->
                     </div>
                 </div>
             </div>
