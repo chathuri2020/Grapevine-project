@@ -9,4 +9,8 @@ urlpatterns = [
 
     # Your JavaScript must use this exact path:
     path('single_image_t/', views.single_image_api, name='single_image_api'),
+    path('batch_zip_t/', views.batch_zip_api, name='batch_zip_api'), 
+    path('download_csv/', views.download_csv, name='download_csv'),
+
 ]
+  # <-- NEW

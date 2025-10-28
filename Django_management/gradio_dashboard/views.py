@@ -10,14 +10,20 @@ from io import BytesIO
 import base64
 
 # Import your model logic function
-from .modules.single_image import process_single 
+from .modules.single_image import process_single
+from .modules.batch_processing import process_batch
+from django.http import FileResponse
 
 # --- Normal HTML pages ---
+
+
 def single_image(request):
     return render(request, 'gradio/single_image.html')
 
+
 def batch_zip(request):
     return render(request, 'gradio/batch_zip.html')
+
 
 def report(request):
     return render(request, 'gradio/report.html')
@@ -26,9 +32,9 @@ def report(request):
 
 
 @require_POST
-@csrf_exempt # Use this because CSRF token is manually passed via FormData
+@csrf_exempt  # Use this because CSRF token is manually passed via FormData
 def single_image_api(request):
-    
+
     if 'image_file' not in request.FILES:
         return JsonResponse({'error': 'Image file not provided.'}, status=400)
 
@@ -51,7 +57,7 @@ def single_image_api(request):
 
     # 3. Convert processed image (PIL) to Base64 string for the JS frontend
     buffered = BytesIO()
-    processed_img_pil.save(buffered, format="PNG") 
+    processed_img_pil.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
     # 4. Return the structured JSON response
@@ -60,3 +66,50 @@ def single_image_api(request):
         'metrics': metrics_dict
     })
 
+
+""" Batch processing  """
+
+
+@csrf_exempt
+def batch_zip_api(request):
+    """
+    API endpoint to process a ZIP file of images and return YOLO results.
+    """
+    if request.method != 'POST':
+        return JsonResponse({'error': 'POST method required.'}, status=405)
+
+    if 'zip_file' not in request.FILES:
+        return JsonResponse({'error': 'ZIP file not provided.'}, status=400)
+    """ else:
+        return JsonResponse({'error': 'ZIP file is here.'}, status=400) """
+
+    zip_file = request.FILES['zip_file']
+
+    try:
+        df, csv_path = process_batch(zip_file)
+
+        # Convert DataFrame to string for frontend display
+        csv_text = df.to_string(index=False)
+        #convert 
+        df_json = df.to_dict(orient='records')
+        columns = list(df.columns)
+
+        return JsonResponse({
+            'message': 'Batch processing completed successfully!',
+            'results_text': csv_text,
+            'results_data': df_json,
+            'columns': columns,
+            'success': True,
+            # 'csv_download': csv_path  # optional: if you want a download link later
+        })
+
+    except Exception as e:
+        print("Error in batch processing:", e)
+        return JsonResponse({'error': f'Failed to process ZIP: {str(e)}'}, status=500)
+
+
+def download_csv(request):
+    csv_path = request.GET.get('path')
+    if not csv_path or not os.path.exists(csv_path):
+        return JsonResponse({'error': 'File not found'}, status=404)
+    return FileResponse(open(csv_path, 'rb'), as_attachment=True, filename='grape_growth_results.csv')

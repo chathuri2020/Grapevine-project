@@ -1,7 +1,8 @@
-import os, tempfile, zipfile
+import os
+import tempfile
+import zipfile
 import pandas as pd
 from ultralytics import YOLO
-import os
 
 APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 model_path = os.path.join(APP_DIR, "models", "best_2025_10_09.pt")
@@ -14,12 +15,25 @@ except Exception as e:
     print(f"Error loading YOLO model: {e}")
     model = None
 
+
 def process_batch(zip_file):
+    """Process a ZIP file of images and return results as DataFrame + CSV path."""
     results_list = []
+
+    # ✅ Create a secure temporary directory
     with tempfile.TemporaryDirectory() as tmpdirname:
-        with zipfile.ZipFile(zip_file.name, 'r') as zip_ref:
+        temp_zip_path = os.path.join(tmpdirname, zip_file.name)
+
+        # ✅ Write uploaded ZIP to a temp file
+        with open(temp_zip_path, 'wb+') as destination:
+            for chunk in zip_file.chunks():
+                destination.write(chunk)
+
+        # ✅ Now open the real file path
+        with zipfile.ZipFile(temp_zip_path, 'r') as zip_ref:
             zip_ref.extractall(tmpdirname)
 
+        # ✅ YOLO processing loop
         for root, _, files in os.walk(tmpdirname):
             for file in files:
                 if not file.lower().endswith(('.jpg', '.jpeg', '.png')):
@@ -41,7 +55,6 @@ def process_batch(zip_file):
                     numbering_folder = numbering_folder[2:]
 
                 image_number = os.path.splitext(file)[0]
-
                 image_id = f"{main_stage}_{treatment}_{numbering_folder}_{image_number}"
                 bunch_id = f"{treatment}_{numbering_folder}_{image_number}"
 
@@ -53,8 +66,8 @@ def process_batch(zip_file):
                     "Berries": berry_count,
                 })
 
+    # ✅ Convert to DataFrame and save CSV
     df = pd.DataFrame(results_list)
-
     temp_dir = tempfile.mkdtemp()
     csv_path = os.path.join(temp_dir, "grape_growth_results.csv")
     df.to_csv(csv_path, index=False)
