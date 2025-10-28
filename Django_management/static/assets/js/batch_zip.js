@@ -11,28 +11,68 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (typeof $.fn.DataTable === "undefined") {
         console.error("⚠️ DataTables is not loaded!");
         return;
+    } else {
+        console.log("DataTables is loaded!");
     }
-    else {
-        console.log(" DataTables is  loaded!");
 
+    // --- 0.5 CREATE DUMMY TABLE ON PAGE LOAD ---
+    function createDummyTable(containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+
+        // Wrapper for responsive table
+        const wrapper = document.createElement('div');
+        wrapper.className = "table-responsive w-100";
+
+        // Table element
+        const table = document.createElement('table');
+        table.id = "batchTable";
+        table.className = "table table-bordered table-hover table-dark w-100"; // dark-friendly
+        wrapper.appendChild(table);
+
+        container.appendChild(wrapper);
+
+        // Initialize DataTable with empty data
+        $(table).DataTable({
+            data: [],              // no rows
+            columns: [{ title: "No columns available", data: "col1" }], // dummy column, actual columns will be generated later
+            paging: true,
+            pageLength: 5,          // <-- number of rows to show by default
+            lengthMenu: [5, 10, 25, 50],
+            searching: true,
+            responsive: true,
+            dom: 'Bfrtip',         // buttons + filter
+            buttons: [
+                { extend: 'copy', text: 'Copy', className: 'btn btn-sm btn-primary mx-1' },
+                { extend: 'csv', text: 'CSV', className: 'btn btn-sm btn-success mx-1' },
+                { extend: 'excel', text: 'Excel', className: 'btn btn-sm btn-warning mx-1' },
+                { extend: 'print', text: 'Print', className: 'btn btn-sm btn-info mx-1' }
+            ],
+            language: {
+                search: "Filter:",
+                paginate: { previous: "Prev", next: "Next" },
+                info: "Showing _START_ to _END_ of _TOTAL_ entries"
+            }
+        });
     }
+
+    // Call dummy table creation on page load
+    createDummyTable('table-container');
+
     // --- 1. BATCH ZIP PROCESS ---
     document.getElementById('run-batch-btn').addEventListener('click', async () => {
         const fileInput = document.getElementById('zip-input-batch');
-        const resultsContainer = document.getElementById('zip-output-batch'); // ✅ updated
+        const resultsContainer = document.getElementById('zip-output-batch');
         const loadingText = document.getElementById('single-loading-text');
         const file = fileInput.files[0];
-        console.log("hi we are loading")
+
         if (!file) {
             alert("Please select a ZIP file containing images.");
             return;
         }
 
-        // Show loading state
         loadingText.style.color = 'green';
         loadingText.textContent = 'Processing ZIP file, please wait...';
-        /*  resultsContainer.value = ''; // clear previous text
-         resultsContainer.placeholder = "Processing..."; */
 
         const formData = new FormData();
         formData.append('zip_file', file);
@@ -46,14 +86,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(`Server Error-Try-Catch: ${errorData.error || response.statusText}`);
+                throw new Error(`Server Error: ${errorData.error || response.statusText}`);
             }
 
             const data = await response.json();
 
             if (data.success) {
                 console.log(data);
-                createTableFromJson(data.results_data, 'table-container');
+                createTableFromJson(data.results_data, 'table-container'); // actual data
             } else {
                 resultsContainer.innerHTML = `<div class="alert alert-danger">❌ ${data.error || 'Processing failed'}</div>`;
             }
@@ -64,38 +104,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
         } finally {
             loadingText.style.display = 'none';
         }
-    }); // ✅ this closes the event listener correctly
+    });
 
-
-    // --- 2. Helper: Create responsive DataTable ---
+    // --- 2. Helper: Create responsive DataTable with real data ---
     function createTableFromJson(data, containerId) {
         if (!data || data.length === 0) {
             document.getElementById(containerId).innerHTML = "<p>No data to display.</p>";
             return;
         }
 
-        // Clear previous table if exists
-        document.getElementById(containerId).innerHTML = "";
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
 
-        // Create wrapper div with Bootstrap responsive table
         const wrapper = document.createElement('div');
         wrapper.className = "table-responsive w-100";
 
-        // Create table
         const table = document.createElement('table');
         table.id = "batchTable";
-        table.className = "table  table-bordered table-hover align-middle";
+        table.className = "table table-bordered table-hover align-middle";
         wrapper.appendChild(table);
 
-        document.getElementById(containerId).appendChild(wrapper);
+        container.appendChild(wrapper);
 
-        // Define columns
         const columns = Object.keys(data[0]).map(key => ({
             title: key.charAt(0).toUpperCase() + key.slice(1),
             data: key
         }));
 
-        // Initialize DataTable
         $(table).DataTable({
             data: data,
             columns: columns,
@@ -104,33 +139,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
             responsive: true,
             dom: 'Bfrtip',
             buttons: [
-                {
-                    extend: 'copy',
-                    text: 'Copy',
-                    className: 'btn btn-sm btn-primary mx-1'
-                },
-                {
-                    extend: 'csv',
-                    text: 'CSV',
-                    className: 'btn btn-sm btn-success mx-1'
-                },
-                {
-                    extend: 'excel',
-                    text: 'Excel',
-                    className: 'btn btn-sm btn-warning mx-1'
-                },
-                {
-                    extend: 'print',
-                    text: 'Print',
-                    className: 'btn btn-sm btn-info mx-1'
-                }
+                { extend: 'copy', text: 'Copy', className: 'btn btn-sm btn-primary mx-1' },
+                { extend: 'csv', text: 'CSV', className: 'btn btn-sm btn-success mx-1' },
+                { extend: 'excel', text: 'Excel', className: 'btn btn-sm btn-warning mx-1' },
+                { extend: 'print', text: 'Print', className: 'btn btn-sm btn-info mx-1' }
             ],
             language: {
                 search: "Filter:",
                 lengthMenu: "Show _MENU_ entries",
-                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries"
             }
-          
         });
     }
 
