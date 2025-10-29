@@ -2,26 +2,153 @@
 {% load static %}
 
 {% block content %}
-    
- <div class="row mt-2">
-    <div class="col-md-6">
-        <label for="img-input-single">Upload Single Image</label>
-        <input type="file" id="img-input-single" accept="image/*" class="form-control mb-3">
-        <button id="run-single-btn" class="btn btn-primary">Run Single Image Analysis</button>
-    </div>
-    <div class="col-md-6">
-        <label>Detection Overlay</label>
-        <div class="p-2 border rounded text-center" style="height: 300px;">
-            <img id="img-output-single" src="" alt="Detection Overlay" class="img-fluid" style="display: none; max-height: 512px;">
-            <p id="single-loading-text" style="display: none; margin-top: 150px;">Processing...</p>
+<div class="row">
+    <!-- LEFT SIDE: Batch ZIP Analysis (unchanged) -->
+    <div class="col-lg-8 col-md-12 m">
+
+        <!-- Top Card: Single Image Analysis -->
+        <div class="row">
+            <div class="card mb-3  shadow-sm border-0 rounded-2 text-center">
+                <div class="card-body">
+                    <h1 class="fw-bold  mb-1">Welcome to <span style="color: #8f5fe8;">Vitis</span> AI !</h1>
+                    <p class="text-muted mb-0">Your intelligent dashboard for grape analysis and AI insights.</p>
+                </div>
+            </div>
         </div>
-        <div class="mt-3">
-            <label>Metrics</label>
-            <div id="metrics-output-single" class="alert alert-secondary">Ready for analysis.</div>
+        <div class="row">
+            <!-- 1. Dataset Overview -->
+            <div class="col-lg-6 col-md-6">
+                <div class="card bg-c-green order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">📊 Dataset Overview</h6>
+                        <h2 class="text-right"><i class="fa fa-database f-left"></i><span>Prepared</span></h2>
+                        <p class="m-b-0">Images uploaded for analysis<span class="f-right">Grapes & Flowers</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Object Detection Summary -->
+            <div class="col-lg-6 col-md-6">
+                <div class="card bg-c-yellow order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">🍇 Object Detection</h6>
+                        <h2 class="text-right"><i class="fa fa-seedling f-left"></i><span>Running</span></h2>
+                        <p class="m-b-0">Berries & Flowers<span class="f-right">Irrigated vs Non-Irrigate</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. LLM Analysis & Reports -->
+            <div class="col-lg-6 col-md-6">
+                <div class="card bg-c-pink order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">🤖 AI Insights (LLM)</h6>
+                        <h2 class="text-right"><i class="fa fa-robot f-left"></i><span>Processing</span></h2>
+                        <p class="m-b-0">Generate AI-driven analysis, summaries, and recommendations</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Export & Reporting -->
+            <div class="col-lg-6 col-md-6">
+                <div class="card bg-c-blue order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">📄 Export Reports</h6>
+                        <h2 class="text-right"><i class="fa fa-file-export f-left"></i><span>Available</span></h2>
+                        <p class="m-b-0">Download analysis as CSV, PDF, or EXCEL with annotated Ratios</p>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Bottom Card: Report Generation -->
+
+
+
     </div>
+    <div class="col-lg-4 col-md-12">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body text-center">
+                <h5 class="card-header text-center text-primary mb-3 text-p">Getting Started</h5>
+                <p class="card-text text-start mb-2">
+                    1️⃣ Upload images to begin your Dataset Overview.
+                </p>
+                <p class="card-text text-start mb-2">
+                    2️⃣ Run Object Detection to identify grapes and flowers.
+                </p>
+                <p class="card-text text-start mb-2">
+                    3️⃣ View Classification Results to analyze size, maturity, and color.
+                </p>
+                <p class="card-text text-start mb-2">
+                    4️⃣ Classify images based on treatment: <strong>Irrigated</strong> and
+                    <strong>Non-Irrigated</strong>.
+                </p>
+                <p class="card-text text-start mb-2">
+                    5️⃣ Detect and count buds and fruits automatically.
+                </p>
+                <p class="card-text text-start mb-2">
+                    6️⃣ Generate summary plots and export PDF reports for analysis.
+                </p>
+                <p class="card-text text-start mb-0">
+                    7️⃣ Try the new LLM Assistant for smart analysis recommendations.
+                </p>
+                <div class="mt-4 mb-5 d-flex flex-wrap justify-content-center gap-2">
+
+                    <a href="{% url 'gradio_dashboard:single_image' %}" class="btn btn-warning">Run Detection</a>
+                    <a href="{% url 'gradio_dashboard:report' %}" class="btn btn-info">Generate Reports</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <style>
+        .bg-c-blue {
+
+            background-color: #8f5fe8;
+        }
+
+        .bg-c-green {
+            background-color: #0090e7;
+
+        }
+
+        .bg-c-yellow {
+            background-color: #ffab00;
+        }
+
+        .bg-c-pink {
+            /*  background: linear-gradient(45deg, #fc424a, #ff869a); */
+            background-color: #fc424a;
+        }
+
+
+        .card {
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+            box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+            border: none;
+            margin-bottom: 30px;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card .card-block {
+            padding: 25px;
+        }
+
+        .order-card i {
+            font-size: 26px;
+        }
+
+        .f-left {
+            float: left;
+        }
+
+        .f-right {
+            float: right;
+        }
+    </style>
 </div>
 
-
-<script type="module" src="{% static 'assets/js/gradio.js' %}"></script>
 {% endblock content %}

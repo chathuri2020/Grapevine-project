@@ -34,8 +34,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         // Initialize DataTable with empty data
         $(table).DataTable({
-            data: [],              // no rows
-            columns: [{ title: "No columns available", data: "col1" }], // dummy column, actual columns will be generated later
+            data: [],              // no rows  Bunch_ID	Image_ID	Treatment	Flowers	Berries
+
+            columns: [{ title: "Bunch_ID", data: "col1" },{ title: "Image_ID", data: "col1" },{ title: "Treatment", data: "col1" },{ title: "Flowers", data: "col1" },{ title: "Berries", data: "col1" }], // dummy column, actual columns will be generated later
             paging: true,
             pageLength: 5,          // <-- number of rows to show by default
             lengthMenu: [5, 10, 25, 50],
@@ -136,7 +137,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             columns: columns,
             pageLength: 10,
             lengthMenu: [5, 10, 25, 50],
-            responsive: true,
+            responsive: false,   // disable column collapsing
+            scrollX: true,
             dom: 'Bfrtip',
             buttons: [
                 { extend: 'copy', text: 'Copy', className: 'btn btn-sm btn-primary mx-1' },
