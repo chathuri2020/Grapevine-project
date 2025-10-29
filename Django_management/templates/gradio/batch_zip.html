@@ -17,21 +17,43 @@
 
             <!-- Upload ZIP -->
             <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Upload ZIP of Images</h6>
-                    </div>
-                    <div class="card-body">
-                        <input id="zip-input-batch" type="file" accept=".zip" class="form-control bg-dark text-light border-secondary">
-                        <button class="btn btn-primary mt-3 w-100" id="run-batch-btn">Run Batch Analysis</button>
-                        <p id="single-loading-text" class="mt-3 text-center" style="color: rgb(195, 3, 3);">
-                            Results will appear
-                        </p>
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Upload ZIP of Images</h6>
+                        </div>
+                        <div class="card-body">
+                            <input id="zip-input-batch" type="file" accept=".zip"
+                                class="form-control bg-dark text-light border-secondary">
+                            <button class="btn btn-primary mt-3 w-100" id="run-batch-btn">Run Batch Analysis</button>
+                            <p id="single-loading-text" class="mt-3 text-center" style="color: rgb(195, 3, 3);">
+                                Results will appear
+                            </p>
 
-                        <!-- Instructions box -->
+                            <!-- Instructions box -->
 
+                        </div>
                     </div>
                 </div>
+                <!-- <div class="row mt-2">
+                    <div class="mt-1 p-2 bg-dark text-light rounded small">
+    <strong>Instructions:</strong><br>
+    • Upload a ZIP file with the following structure:<br>
+    <pre style="background:#171717; color:#fff; padding:5px; border-radius:5px;">
+Main_Folder/
+├── Buds/
+│   ├── Irrigated/
+│   │   ├── 1/
+│   │   │   ├── 1.jpg
+│   │   │   └── 2.jpg
+│   └── Non-Irrigated/
+├── Fruits/
+│   ├── Irrigated/
+│   └── Non-Irrigated/
+    </pre>
+</div>
+
+                </div> -->
             </div>
 
             <!-- Results -->
@@ -45,7 +67,7 @@
                         <div id="metrics-output-single" class="mt-3 text-center text-primary small">
                             Select a ZIP and click Run Analysis.
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
