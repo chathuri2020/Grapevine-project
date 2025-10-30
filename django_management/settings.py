@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,6 +88,14 @@ WSGI_APPLICATION = 'django_management.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    'default': dj_database_url.config(
+        default="postgres://vitis_user:YtJ8TEutkGQuUTAMPqR3oPBWgxfy006PO@dpg-d41q5n3uibrs73cqa630-a:5432/vitis",
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
+
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vitisai',
@@ -95,7 +106,7 @@ DATABASES = {
         #User “grapevinehostcp_grapevinehostcp” was added to the database “grapevinehostcp_vitisai”.
 
     }
-}
+} """
 
 """ 
 DATABASES = {
