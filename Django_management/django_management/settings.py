@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-52r)w!#d!2*@!28i9593zxvu6ws5$g1llg!c^&1d4#5b&2wypr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://grapevine.bornbee.com/']
+#ALLOWED_HOSTS = ['https://grapevine.bornbee.com/']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', #add the fastapi connection between gradio and djngo
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -86,10 +88,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vitisai',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'USER': 'root', #grapevinehostcp
+        'PASSWORD': 'root', #Vitis@123
         'HOST': 'localhost',
         'PORT': '3306',
+        #User “grapevinehostcp_grapevinehostcp” was added to the database “grapevinehostcp_vitisai”.
 
     }
 }
