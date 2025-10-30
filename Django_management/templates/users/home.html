@@ -71,28 +71,29 @@
             <div class="card-body text-center">
                 <h5 class="card-header text-center text-primary mb-3 text-p">Getting Started</h5>
                 <p class="card-text text-start mb-2">
-                    1️⃣ Upload images to begin your Dataset Overview.
+                    1️⃣ Upload Images – Add grape images or batch folders to begin your dataset overview.
                 </p>
                 <p class="card-text text-start mb-2">
-                    2️⃣ Run Object Detection to identify grapes and flowers.
+                    2️⃣ Run Object Detection – Detect and count buds and fruits automatically using the YOLO model.
                 </p>
                 <p class="card-text text-start mb-2">
-                    3️⃣ View Classification Results to analyze size, maturity, and color.
+                    3️⃣ View Detection Results – Check bud and fruit counts with visual bounding boxes for accuracy.
                 </p>
                 <p class="card-text text-start mb-2">
-                    4️⃣ Classify images based on treatment: <strong>Irrigated</strong> and
-                    <strong>Non-Irrigated</strong>.
+                    4️⃣ Classify Treatments – Compare growth across <strong>Irrigated</strong> and
+                    <strong>Non-Irrigated</strong> samples.
                 </p>
                 <p class="card-text text-start mb-2">
-                    5️⃣ Detect and count buds and fruits automatically.
+                    5️⃣ Batch Analysis – Process multiple images at once and generate a summary CSV report.
                 </p>
                 <p class="card-text text-start mb-2">
-                    6️⃣ Generate summary plots and export PDF reports for analysis.
+                    6️⃣ Generate Reports – Create visual PDF summaries with trends, ratios, and growth insights.
                 </p>
                 <p class="card-text text-start mb-0">
-                    7️⃣ Try the new LLM Assistant for smart analysis recommendations.
+                    7️⃣ LLM Assistant – Get automatic English and Italian summaries with smart AI insights.
                 </p>
-                <div class="mt-4 mb-5 d-flex flex-wrap justify-content-center gap-2">
+
+                <div class="mt-4 mb-1 d-flex flex-wrap justify-content-center gap-2">
 
                     <a href="{% url 'gradio_dashboard:single_image' %}" class="btn btn-warning">Run Detection</a>
                     <a href="{% url 'gradio_dashboard:report' %}" class="btn btn-info">Generate Reports</a>
