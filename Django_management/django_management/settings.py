@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-52r)w!#d!2*@!28i9593zxvu6ws5$g1llg!c^&1d4#5b&2wypr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://grapevine.bornbee.com/']
 
 # Application definition
 
@@ -144,6 +144,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Media Files Settings
 MEDIA_URL = '/media/'
