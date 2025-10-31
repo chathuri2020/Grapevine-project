@@ -8,7 +8,7 @@ __pycache__/
 venv/
 env/
 ENV/
-
+venv38/
 # Django
 *.sqlite3
 *.log
