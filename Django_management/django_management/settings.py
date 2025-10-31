@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path
 import os
 
@@ -26,7 +25,9 @@ SECRET_KEY = 'django-insecure-52r)w!#d!2*@!28i9593zxvu6ws5$g1llg!c^&1d4#5b&2wypr
 DEBUG = True
 
 #ALLOWED_HOSTS = ['https://grapevine.bornbee.com/']
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '9e2208fe0523.ngrok-free.app']
+
 
 # Application definition
 
@@ -97,19 +98,7 @@ DATABASES = {
     }
 }
 
-""" 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-        
 
-    }
-} """
 
 
 
