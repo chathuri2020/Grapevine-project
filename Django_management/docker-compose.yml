@@ -31,7 +31,7 @@ services:
       - MYSQL_HOST=srv-captain--vitisai-db
       - MYSQL_DATABASE=vitisai
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
+      - MYSQL_PASSWORD=gaqhUqsG2yK0c2
 
 volumes:
   mysql_data:
