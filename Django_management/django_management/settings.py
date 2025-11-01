@@ -105,7 +105,7 @@ DATABASES = {
         'USER': os.getenv('MYSQL_USER'),
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
        # 'HOST': os.getenv('MYSQL_HOST'),  # This must match service name in docker-compose
-        'HOST': MYSQL_HOST,
+        'HOST': os.getenv('MYSQL_HOST'),
         'PORT': '3306',
     }
 }
