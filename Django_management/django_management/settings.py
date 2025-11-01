@@ -91,31 +91,11 @@ WSGI_APPLICATION = 'django_management.wsgi.application'
 
 
 # Detect CapRover environment
-if os.getenv("CAPROVER_APP_ID"):
-    # CapRover provides DB credentials automatically
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('MYSQL_DATABASE'),
-            'USER': os.getenv('MYSQL_USER'),
-            'PASSWORD': os.getenv('MYSQL_PASSWORD'),
-            'HOST': os.getenv('MYSQL_HOST'),
-            'PORT': os.getenv('MYSQL_PORT', '33060'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.dummy',
     }
-else:
-    # Local Docker Compose or local dev
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('MYSQL_DATABASE', 'vitisai'),
-            'USER': os.getenv('MYSQL_USER', 'root'),
-            'PASSWORD': os.getenv('MYSQL_PASSWORD', 'root'),
-            'HOST': os.getenv('MYSQL_HOST', 'db'),
-            'PORT': os.getenv('MYSQL_PORT', '3306'),
-        }
-    }
-
+}
 
 
 
