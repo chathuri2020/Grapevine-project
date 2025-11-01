@@ -34,7 +34,8 @@ RUN pip install --no-cache-dir torch==2.9.0 torchvision==0.24.0 --index-url http
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Step 8: Copy the entire Django project to /app
-COPY . /app/
+#COPY . /app/
+COPY Django_management/ /app/
 
 # Step 9: Collect static files
 RUN python manage.py collectstatic --noinput
