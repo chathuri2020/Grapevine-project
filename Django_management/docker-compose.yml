@@ -28,7 +28,7 @@ services:
     env_file:
       - .env
     environment:
-      - MYSQL_HOST=db
+      - MYSQL_HOST=srv-captain--vitisai-db
       - MYSQL_DATABASE=vitisai
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
