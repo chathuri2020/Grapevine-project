@@ -46,4 +46,5 @@ EXPOSE 8000
 # Step 11: Run the Django app
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
-CMD ["gunicorn", "-c", "python:config.gunicorn", "config.wsgi"]
+#CMD ["gunicorn", "-c", "python:config.gunicorn", "config.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "django_management.wsgi:application"]
