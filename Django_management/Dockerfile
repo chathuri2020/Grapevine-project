@@ -44,7 +44,7 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Step 11: Run the Django app
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 #CMD ["gunicorn", "-c", "python:config.gunicorn", "config.wsgi"]
-#CMD ["gunicorn", "django_management.wsgi:application", "--bind", "0.0.0.0:80", "--workers", "3"]
+CMD ["gunicorn", "django_management.wsgi:application", "--bind", "0.0.0.0:80", "--workers", "3"]
