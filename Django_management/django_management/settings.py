@@ -17,7 +17,7 @@ DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 
 #ALLOWED_HOSTS = ['https://grapevine.bornbee.com/']
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','0.0.0.0', 'http://grapevine.grapevine.bornbee.com/']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','0.0.0.0', 'grapevine.grapevine.bornbee.com']
 
 
 # Application definition
