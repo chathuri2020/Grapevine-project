@@ -1,5 +1,5 @@
 {
   "schemaVersion": 2,
-  "dockerfilePath": "django_management/Dockerfile"
+  "dockerfilePath": "Django_management/Dockerfile"
  
 }
