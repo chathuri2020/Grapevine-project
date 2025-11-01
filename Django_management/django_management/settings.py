@@ -89,13 +89,23 @@ WSGI_APPLICATION = 'django_management.wsgi.application'
     }
 } """
 
+
+# Detect CapRover environment
+if os.getenv("CAPROVER_APP_ID"):  
+    # Running on CapRover
+    MYSQL_HOST = os.getenv("MYSQL_HOST", "srv-captain--vitisai-db")
+else:
+    # Running locally (Docker Compose)
+    MYSQL_HOST = os.getenv("MYSQL_HOST", "db")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('MYSQL_DATABASE'),
         'USER': os.getenv('MYSQL_USER'),
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
-        'HOST': os.getenv('MYSQL_HOST'),  # This must match service name in docker-compose
+       # 'HOST': os.getenv('MYSQL_HOST'),  # This must match service name in docker-compose
+        'HOST': MYSQL_HOST,
         'PORT': '3306',
     }
 }
