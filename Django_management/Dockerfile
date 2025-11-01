@@ -47,4 +47,4 @@ EXPOSE 8000
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 #CMD ["gunicorn", "-c", "python:config.gunicorn", "config.wsgi"]
-CMD ["gunicorn", "django_management.wsgi:application", "--bind", "0.0.0.0:80"]
+CMD ["gunicorn", "django_management.wsgi:application", "--bind", "0.0.0.0:80", "--workers", "3"]
