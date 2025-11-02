@@ -17,6 +17,10 @@ DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost','0.0.0.0', 'grapevine.grapevine.bornbee.com']
 ALLOWED_HOSTS = ['grapevine.grapevine.bornbee.com', 'grapevine.bornbee.com']
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://grapevine.grapevine.bornbee.com",
+    "https://grapevine.bornbee.com",  # if needed
+]
 
 # Application definition
 
