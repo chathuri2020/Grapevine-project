@@ -25,10 +25,12 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" id="profileDropdown">
                     <div class="navbar-profile">
-                        <div class="rounded-circle p-3 bg-primary text-white d-flex align-items-center justify-content-center"
-                            style="width:50px; height:50px; font-size:40px;">
-                            <i class="fa fa-user"></i>
+                        <!-- Navbar user icon -->
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center"
+                            style="width:40px; height:40px; font-size:18px; line-height:1;">
+                            <i class="fa fa-user" style="line-height:1;"></i>
                         </div>
+
                         <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ user.username | capfirst }}</p>
                         <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                     </div>
