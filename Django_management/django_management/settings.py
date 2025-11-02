@@ -4,12 +4,12 @@ import os
 from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 dotenv_path = os.path.join(BASE_DIR.parent, '.env')
-load_dotenv()  #
+load_dotenv(dotenv_path)  #
 
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = '%h@95ks0d^-a%nxrv2h5+x1ybx1m%&r^a0^(!b!zfas$f!fqp'
 DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 
 #ALLOWED_HOSTS = ['https://grapevine.bornbee.com/']
