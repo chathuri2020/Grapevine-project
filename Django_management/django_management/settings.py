@@ -14,7 +14,8 @@ DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 
 #ALLOWED_HOSTS = ['https://grapevine.bornbee.com/']
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','0.0.0.0', 'grapevine.grapevine.bornbee.com']
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost','0.0.0.0', 'grapevine.grapevine.bornbee.com']
+ALLOWED_HOSTS = ['grapevine.grapevine.bornbee.com', 'grapevine.bornbee.com']
 
 
 # Application definition
@@ -74,11 +75,16 @@ WSGI_APPLICATION = 'django_management.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv("MYSQL_DATABASE", "vitisai"),
+        'USER': os.getenv("MYSQL_USER", "root"),
+        'PASSWORD': os.getenv("MYSQL_PASSWORD", "root"),
+        'HOST': os.getenv("MYSQL_HOST", "srv-captain--vitisai-db"),
+        'PORT': os.getenv("MYSQL_PORT", "3306"),
     }
 }
+
 
 
 # Password validation

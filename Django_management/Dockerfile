@@ -38,10 +38,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY Django_management/ /app/
 
 # Step 9: Collect static files
-RUN python manage.py collectstatic --noinput
+#RUN python manage.py collectstatic --noinput
 
 # Step 10: Expose port 8000
-EXPOSE 8000
+EXPOSE 80
 
 # Step 11: Run the Django app
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
