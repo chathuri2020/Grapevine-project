@@ -1,43 +1,48 @@
 {% load static %}
 
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo" href="{% url 'user_app:home' %}"><img alt="logo" src="{% static 'assets/images/vitisAI-logo.svg' %}"/></a>
-        <a class="sidebar-brand brand-logo-mini" href="{% url 'user_app:home' %}"><img alt="logo" src="{% static 'assets/images/viti-logo-mini.svg' %}"/></a>
-    </div>
-    <ul class="nav">
-        <li class="nav-item profile">
-            <div class="profile-desc">
-                <div class="profile-pic">
-                    <div class="count-indicator">
-                        <img alt="" class="img-xs rounded-circle " src= src="{% if data.profile.image and data.profile.image.url %}{{ data.profile.image.url }}{% else %}/media/images/profile/default.webp{% endif %}">
-                        <span class="count bg-success"></span>
-                    </div>
-                    <div class="profile-name">
-                        <h5 class="mb-0 font-weight-normal">{{ user.username | capfirst }}</h5>
-                        <!-- <span>{{ user.user_type }}</span> -->
-                    </div>
-                </div>
-                <a data-toggle="dropdown" href="#" id="profile-dropdown"><i class="mdi mdi-dots-vertical"></i></a>
-                <div aria-labelledby="profile-dropdown" class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list">
-                    <a class="dropdown-item preview-item" href="#">
-                        <div class="preview-thumbnail">
-                            <div class="preview-icon bg-dark rounded-circle">
-                                <i class="mdi mdi-account text-primary"></i>
-                            </div>
-                        </div>
-                        <div class="preview-item-content">
-                            <p class="preview-subject ellipsis mb-1 text-small">Profile</p>
-                        </div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                </div>
+  <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+    <a class="sidebar-brand brand-logo" href="{% url 'user_app:home' %}"><img alt="logo"
+        src="{% static 'assets/images/vitisAI-logo.svg' %}" /></a>
+    <a class="sidebar-brand brand-logo-mini" href="{% url 'user_app:home' %}"><img alt="logo"
+        src="{% static 'assets/images/viti-logo-mini.svg' %}" /></a>
+  </div>
+  <ul class="nav">
+    <li class="nav-item profile">
+      <div class="profile-desc">
+        <div class="profile-pic">
+          <div class="count-indicator">
+            <div class="rounded-circle p-1 bg-primary text-white d-flex align-items-center justify-content-center"
+              style="width:110px; height:110px; font-size:24px; text-transform:uppercase;">
+              {{ data.first_name }} {{ data.last_name }}
             </div>
-        </li>
-        <li class="nav-item nav-category">
-            <span class="nav-link">Navigation</span>
-        </li>
-        <!-- <li class="nav-item menu-items">
+            <span class="count bg-success"></span>
+          </div>
+          <div class="profile-name">
+            <h5 class="mb-0 font-weight-normal">{{ user.username | capfirst }}</h5>
+            <!-- <span>{{ user.user_type }}</span> -->
+          </div>
+        </div>
+        <a data-toggle="dropdown" href="#" id="profile-dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+        <div aria-labelledby="profile-dropdown" class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list">
+          <a class="dropdown-item preview-item" href="#">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-dark rounded-circle">
+                <i class="mdi mdi-account text-primary"></i>
+              </div>
+            </div>
+            <div class="preview-item-content">
+              <p class="preview-subject ellipsis mb-1 text-small">Profile</p>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item nav-category">
+      <span class="nav-link">Navigation</span>
+    </li>
+    <!-- <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'user_app:home' %}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
@@ -45,39 +50,39 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li> -->
-        <li class="nav-item menu-items">
-            <a class="nav-link" href="{% url 'gradio_dashboard:single_image' %}">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
-              </span>
-                <span class="menu-title">Single Analysis</span>
-            </a>
-        </li>
-        <li class="nav-item menu-items">
-            <a class="nav-link" href="{% url 'gradio_dashboard:batch_zip' %}">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
-              </span>
-                <span class="menu-title">Batch Analysis</span>
-            </a>
-        </li>
-        <li class="nav-item menu-items">
-            <a class="nav-link" href="{% url 'gradio_dashboard:report' %}">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
-              </span>
-                <span class="menu-title">Generate Reports</span>
-            </a>
-        </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
-              </span>
-                <span class="menu-title">LLM</span>
-            </a>
-        </li>
-       <!--  <li class="nav-item menu-items">
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="{% url 'gradio_dashboard:single_image' %}">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i>
+        </span>
+        <span class="menu-title">Single Analysis</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="{% url 'gradio_dashboard:batch_zip' %}">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i>
+        </span>
+        <span class="menu-title">Batch Analysis</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="{% url 'gradio_dashboard:report' %}">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i>
+        </span>
+        <span class="menu-title">Generate Reports</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i>
+        </span>
+        <span class="menu-title">LLM</span>
+      </a>
+    </li>
+    <!--  <li class="nav-item menu-items">
             <a aria-controls="ui-basic" aria-expanded="false" class="nav-link" data-toggle="collapse" href="#ui-basic">
               <span class="menu-icon">
                 <i class="mdi mdi-account"></i>
@@ -92,5 +97,5 @@
                 </ul>
             </div>
         </li> -->
-    </ul>
+  </ul>
 </nav>
