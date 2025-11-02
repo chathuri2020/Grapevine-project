@@ -25,7 +25,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" id="profileDropdown">
                     <div class="navbar-profile">
-                        <img alt="" class="img-xs rounded-circle" src="{{ user.profile.image.url }}">
+                        <img alt="" class="img-xs rounded-circle" src= src="{% if data.profile.image and data.profile.image.url %}{{ data.profile.image.url }}{% else %}/media/images/profile/default.webp{% endif %}">
                         <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ user.username | capfirst }}</p>
                         <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                     </div>

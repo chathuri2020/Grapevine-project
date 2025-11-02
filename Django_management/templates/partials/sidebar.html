@@ -10,7 +10,7 @@
             <div class="profile-desc">
                 <div class="profile-pic">
                     <div class="count-indicator">
-                        <img alt="" class="img-xs rounded-circle " src="{{ user.profile.image.url }}">
+                        <img alt="" class="img-xs rounded-circle " src= src="{% if data.profile.image and data.profile.image.url %}{{ data.profile.image.url }}{% else %}/media/images/profile/default.webp{% endif %}">
                         <span class="count bg-success"></span>
                     </div>
                     <div class="profile-name">
