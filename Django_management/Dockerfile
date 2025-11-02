@@ -44,7 +44,8 @@ COPY Django_management/ /app/
 EXPOSE 80
 
 # Step 11: Run the Django app
-CMD ["gunicorn", "django_management.wsgi:application", "--bind", "0.0.0.0:80", "--workers", "3", "--log-level", "debug"]
+#CMD ["gunicorn", "django_management.wsgi:application", "--bind", "0.0.0.0:80", "--workers", "3", "--log-level", "debug"]
+CMD ["gunicorn", "django_management.wsgi:application", "--bind", "0.0.0.0:80", "--workers", "3", "--timeout", "600", "--log-level", "debug"]
 
 
 #CMD ["gunicorn", "-c", "python:config.gunicorn", "config.wsgi"]
