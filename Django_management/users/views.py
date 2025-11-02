@@ -101,23 +101,23 @@ class UserProfile(LoginRequiredMixin, UpdateView):
         user = request.user
         data = MyUser.objects.get(id=user.id)
         c_form = CustomerUpdateForm(instance=user)
-        p_form = CustomerProfileForm(instance=user.profile)
+        #p_form = CustomerProfileForm(instance=user.profile)
 
         context = {
             'data': data,
             'c_form': c_form,
-            'p_form': p_form,
+            #'p_form': p_form,
         }
         return render(request, 'users/profile.html', context)
 
     def post(self, request, *args, **kwargs):
         user = request.user
         c_form = CustomerUpdateForm(request.POST, instance=user)
-        p_form = CustomerProfileForm(request.POST, request.FILES, instance=user.profile)
-        if c_form.is_valid() and p_form.is_valid():
+        #p_form = CustomerProfileForm(request.POST, request.FILES, instance=user.profile)
+        if c_form.is_valid() :
             username = c_form.cleaned_data['username']
             c_form.save()
-            p_form.save()
+            #p_form.save()
             messages.success(request, f"{username}'s profile has been updated successfully!")
         return redirect(reverse_lazy('user_app:profile', kwargs={'pk': user.id}))
 
