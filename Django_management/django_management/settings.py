@@ -10,12 +10,14 @@ load_dotenv(dotenv_path)  #
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '%h@95ks0d^-a%nxrv2h5+x1ybx1m%&r^a0^(!b!zfas$f!fqp'
-DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
+
+#DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true" #this is for server
+DEBUG = True
 
 #ALLOWED_HOSTS = ['https://grapevine.bornbee.com/']
 
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost','0.0.0.0', 'grapevine.grapevine.bornbee.com']
-ALLOWED_HOSTS = ['grapevine.grapevine.bornbee.com', 'grapevine.bornbee.com']
+ALLOWED_HOSTS = ['grapevine.grapevine.bornbee.com', 'grapevine.bornbee.com','127.0.0.1', 'localhost','0.0.0.0' ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://grapevine.grapevine.bornbee.com",
@@ -78,13 +80,26 @@ WSGI_APPLICATION = 'django_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+#database for hosting
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vitisai',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'srv-captain--vitisai-db',
+        'PORT': '3306',
+    }
+}
+ """
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'vitisai',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
