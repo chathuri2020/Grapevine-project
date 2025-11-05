@@ -82,20 +82,22 @@
         <span class="menu-title">LLM</span>
       </a>
     </li>
-    <!--  <li class="nav-item menu-items">
-            <a aria-controls="ui-basic" aria-expanded="false" class="nav-link" data-toggle="collapse" href="#ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-account"></i>
-              </span>
-                <span class="menu-title">Users</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'user_app:list' %}">View Users</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'user_app:create' %}">Add Users</a></li>
-                </ul>
-            </div>
-        </li> -->
+    {% if user.user_type == 'admin' %}
+    <li class="nav-item menu-items">
+      <a aria-controls="ui-basic" aria-expanded="false" class="nav-link" data-toggle="collapse" href="#ui-basic">
+        <span class="menu-icon">
+          <i class="mdi mdi-account"></i>
+        </span>
+        <span class="menu-title">Users</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href="{% url 'user_app:list' %}">View Users</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'user_app:create' %}">Add Users</a></li>
+        </ul>
+      </div>
+    </li>
+    {% endif %}
   </ul>
 </nav>
