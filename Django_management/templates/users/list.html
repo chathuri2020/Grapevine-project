@@ -28,20 +28,25 @@
             </tr>
           </thead>
           <tbody>
-          {% for user in data %}
+            {% for user in data %}
             <tr>
               <td>{{ forloop.counter }}</td>
               <td>{{ user.first_name }} {{ user.last_name }}</td>
               <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.city }}</td>
-              <td>{{ user.user_type }}</td>
+              <td>{% if user.user_type == 'customer' %}
+                User
+                {% else %}
+                {{ user.user_type }}
+                {% endif %}</td>
+              <td>
               <td>
                 <a href="{% url 'user_app:update' user.id %}" class="btn btn-primary mx-1">Edit</a>
                 <a href="{% url 'user_app:delete' user.id %}" class="btn btn-danger mx-1">Delete</a>
               </td>
             </tr>
-          {% endfor %}
+            {% endfor %}
           </tbody>
         </table>
       </div>
